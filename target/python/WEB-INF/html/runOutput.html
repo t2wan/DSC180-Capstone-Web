@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Text file reading</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="lib/layui/css/layui.css">
+</head>
+<style>
+    .layui-container{
+        text-align: center;
+    }
+    .layui-row{
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+</style>
+<body>
+<script src="lib/layui/layui.js"></script>
+<script src="js/jquery.js"></script>
+<script>
+    $(function() {
+        var websocket;
+        if('WebSocket' in window) {
+            console.log("The browser support websocket");
+            websocket = new WebSocket("ws://localhost:8080/python/websocket");
+
+        } else if('MozWebSocket' in window) {
+            alert("The browser support MozWebSocket");
+        } else {
+            alert("The browser support SockJS");
+        }
+        websocket.onopen = function(evnt) {
+            console.log("链接服务器成功!")
+        };
+        websocket.onmessage = function(evnt) {
+            //console.log(evnt.data);
+            var textarea = $("#output").append(evnt.data + "\n");
+            textarea.scrollTop(textarea[0].scrollHeight - textarea.height());
+            //var textarea = document.getElementById("output");
+            // textarea.append(evnt.data + "\n");
+            // if(textarea.length)
+            //     textarea.scrollTop(textarea.scrollHeight - textarea.height);
+            // console.log(textarea.scrollHeight - textarea.height)
+        };
+        websocket.onerror = function(evnt) {};
+        websocket.onclose = function(evnt) {
+            console.log("Disconnect to the server")
+        }
+        layui.use('layer', function(){
+            var layer = layui.layer;
+            layer.open({
+                title: 'Information'
+                ,content: 'Are you sure to run?'
+                ,btn: ['Yes', 'Cancel']
+                ,yes: function(index, layero){
+                    layer.close(index);
+                    if(websocket != null) {
+                        websocket.send("run");
+                        $.ajax({
+                            url: "running",
+                            type: "post",
+                            success: function (result) {
+                                console.log(result);
+                            },
+                            error:function(){
+                                console.log("error");
+                            }
+                        });
+                    } else {
+                        alert('Not connect with the server');
+                    }
+                }
+                ,btn2: function(index, layero){
+                    window.history.go(-1);
+                }
+                ,cancel: function(){
+                    //右上角关闭回调
+                    window.history.go(-1);
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+            });
+        });
+
+    });
+</script>
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-md6 layui-col-md-offset3">
+            <h1 style="color: grey;">
+                Running
+            </h1>
+        </div>
+        <div class="layui-col-md2 layui-col-md-offset1">
+            <div class="layui-result">
+                <button type="button" class="layui-btn layui-btn-primary" onclick="location.href='http://localhost:8080/python/result'">Check the results</button>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-col-md12">
+                <textarea cols="30" rows="20x" id="output" disabled="disabled" placeholder="required a .txt file" class="layui-textarea">
+                </textarea>
+        </div>
+    </div>
+</div>
+</body>
+</html>

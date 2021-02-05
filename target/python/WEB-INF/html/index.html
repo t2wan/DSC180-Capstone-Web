@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+  
+<head> 
+    <title>Text file reading</title> 
+    <meta charset="utf-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="lib/layui/css/layui.css">
+</head>
+<style>
+    .layui-container{
+        text-align: center;
+    }
+    .layui-row{
+        margin-bottom: 10px;
+    }
+</style>
+<body>
+<script src="lib/layui/layui.js"></script>
+<script src="js/jquery.js"></script>
+<script>
+    layui.use(['upload','layer'], function() {
+        var $ = layui.jquery
+            , upload = layui.upload;
+        var layer = layui.layer;
+        var files = null;
+        //指定允许上传的文件类型
+        upload.render({
+            elem: '#selectFile'
+            ,url: 'fileUpload' //改成自己的上传接口
+            ,accept: 'file' //普通文件
+            ,exts: 'txt'
+            ,choose: function(obj){
+                files = obj.pushFile();
+            }
+            ,done: function(res){
+                //layer.msg('上传成功');
+                var textarea = document.getElementById("text");
+                textarea.value = res.data.text;
+            }
+        });
+        $("#run").on('click',function () {
+            if(files == null)
+            {
+                layer.open({
+                    content: 'please select a .txt file'
+                    , btn: ['OK']
+                    , yes: function (index, layero) {
+                        layer.close(index);
+                    }
+                    , cancel: function () {
+                    }
+                });
+            } else
+                window.location.href='http://localhost:8080/python/run';
+        });
+    });
+</script>
+
+<script>
+    layui.use(['upload','layer'], function() {
+        var $ = layui.jquery
+            , upload = layui.upload;
+        var layer = layui.layer;
+        var files = null;
+        //指定允许上传的文件类型
+        upload.render({
+            elem: '#selectFiler'
+            ,url: 'fileUpload' //改成自己的上传接口
+            ,accept: 'file' //普通文件
+            ,exts: 'txt'
+            ,choose: function(obj){
+                files = obj.pushFile();
+                console.log(files)
+            }
+            ,done: function(res){
+                //layer.msg('上传成功');
+                var textarea = document.getElementById("base");
+                textarea.value = res.data.text;
+            }
+        });
+    });
+</script>
+    <br><div class="layui-container">
+        <div class="layui-row">
+            <div class="layui-col-md6 layui-col-md-offset3">
+                <h1 style="color: grey;">
+                    AutoPhrase Application Web
+                </h1>
+            </div>
+        </div><br>
+
+    <div class="layui-container">
+        <div class="layui-row">
+            <div class="layui-col-md6 layui-col-md-offset3">
+
+                    Yicen Ma, Tiange Wan, Anant Gandhi
+
+            </div>
+        </div>
+
+
+        <div class="layui-row">
+            <div class="layui-col-md2 layui-col-md-offset1">
+                <div class="layui-upload">
+                    <button type="button" class="layui-btn layui-btn-primary" id="selectFile">Upload Text Corpus</button>
+                </div>
+
+            </div>
+
+            <div class="layui-col-md2 layui-col-md-offset1">
+                <div class="layui-upload">
+                    <button type="button" class="layui-btn layui-btn-primary" id="selectFiler">Upload Language Base(Optional)</button>
+                </div>
+            </div>
+
+            <div class="layui-col-md2 layui-col-md-offset2">
+                <div class="layui-run">
+                    <button type="button" class="layui-btn layui-btn-primary" id="run">Run AutoPhrase</button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-row">
+            <div class="layui-col-md12">
+                <textarea cols="30" rows="20x" id="text" disabled="disabled" placeholder="required a .txt file" class="layui-textarea">
+                </textarea>
+            </div>
+        </div>
+
+        <div class="layui-row">
+            <div class="layui-col-md12">
+                <textarea cols="15" rows="10x" id="base" disabled="disabled" placeholder="required a .txt file" class="layui-textarea">
+                </textarea>
+            </div>
+        </div>
+
+        <br><div class="layui-container">
+        <div class="layui-row">
+            <div class="layui-col-md1">
+                <h2>
+                    Background
+                </h2>
+            </div>
+        </div><br>
+
+        <div class="layui-row">
+            <div class="layui-col-md12">
+                <p>
+                Phrase mining - the extraction of high-quality phrases from a large input corpus - is an
+                important and interesting skill to analyze text datasets with. It has various applications such as
+                information extraction, topic modeling, etc. It also plays an important role in domains like
+                market research, public sentiment and fraud detection. Raw frequency-based phrase mining has
+                many limitations, most majorly that recurring word sequences may not form meaningful phrases
+                (or be structured), which causes semantic ambiguity and misleading quality assessment.
+                </p>
+            </div>
+        </div>
+
+        <br>
+        <div class="layui-container">
+        <div class="layui-row">
+            <div class="layui-col-md1">
+                <h2>
+                    Reference
+                </h2>
+            </div>
+        </div><br>
+
+        <div class="layui-row">
+            <div class="layui-col-md12">
+                <p>
+                    Jingbo Shang, Jialu Liu, Meng Jiang, Xiang Ren, Clare R Voss, Jiawei Han, "Automated Phrase Mining from Massive Text Corpora", accepted by IEEE Transactions on Knowledge and Data Engineering, Feb. 2018.</p>
+                <p>
+                    Jialu Liu*, Jingbo Shang*, Chi Wang, Xiang Ren and Jiawei Han, "Mining Quality Phrases from Massive Text Corpora”, Proc. of 2015 ACM SIGMOD Int. Conf. on Management of Data (SIGMOD'15), Melbourne, Australia, May 2015. (* equally contributed, slides)
+                </p>
+            </div>
+        </div>
+
+
+
+    </div>
+</body> 
+  
+</html> 
