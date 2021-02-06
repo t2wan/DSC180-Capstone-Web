@@ -21,7 +21,10 @@ public class FileServiceImpl implements FileService {
         Map<String, Object> data = null;
         try {
             //存放路径
-            file.transferTo(new File("/Users/johnwang/Desktop/DSC180A/data/raw/input.txt"));
+//            file.transferTo(new File("/Users/johnwang/Desktop/DSC180A/data/raw/input.txt"));
+//            file.transferTo(new File("/Users/gandh/DSC180-Capstone-Project/data/raw/input.txt"));
+            file.transferTo(new File("../DSC180-Capstone-Project/data/raw/input.txt"));
+
             InputStreamReader read = new InputStreamReader(
                     file.getInputStream(),"utf-8");
             BufferedReader bufferedReader = new BufferedReader(read);
@@ -45,9 +48,14 @@ public class FileServiceImpl implements FileService {
         String multi = "";
         List<Map<String,Object>> wordCloudList = new ArrayList<>();
         Map<String, Object> data = null;
-        String autoPhrase = "/Users/johnwang/Desktop/DSC180A/data/outputs/AutoPhrase.txt";
-        String autoPhraseSingle = "/Users/johnwang/Desktop/DSC180A/data/outputs/AutoPhrase_single-word.txt";
-        String autoPhraseMulti = "/Users/johnwang/Desktop/DSC180A/data/outputs/AutoPhrase_multi-words.txt";
+//        String autoPhrase = "/Users/johnwang/Desktop/DSC180A/data/outputs/AutoPhrase.txt";
+//        String autoPhraseSingle = "/Users/johnwang/Desktop/DSC180A/data/outputs/AutoPhrase_single-word.txt";
+//        String autoPhraseMulti = "/Users/johnwang/Desktop/DSC180A/data/outputs/AutoPhrase_multi-words.txt";
+
+        String autoPhrase = "../../DSC180-Capstone-Project/data/outputs/AutoPhrase.txt";
+        String autoPhraseSingle = "../../DSC180-Capstone-Project/data/outputs/AutoPhrase_single-word.txt";
+        String autoPhraseMulti = "../../DSC180-Capstone-Project/data/outputs/AutoPhrase_multi-words.txt";
+
         try {
             //读取AutoPhrase.txt
             File textFile = new File(autoPhrase);
@@ -104,8 +112,13 @@ public class FileServiceImpl implements FileService {
             System.out.println(multi);
 
             //读取图片
-            String srcFile = "/Users/johnwang/Desktop/DSC180A/data/outputs/multi_value_distribution.png";
-            String destFile = "/Users/johnwang/Desktop/python/src/main/webapp/img/multi_value_distribution.png";
+//            String srcFile = "/Users/johnwang/Desktop/DSC180A/data/outputs/multi_value_distribution.png";
+//            String destFile = "/Users/johnwang/Desktop/python/src/main/webapp/img/multi_value_distribution.png";
+
+            String srcFile = "../../DSC180-Capstone-Project/data/outputs/multi_value_distribution.png";
+            String destFile = "../../DSC180-Capstone-Web/src/main/webapp/img/multi_value_distribution.png";
+
+
             String tempFile =path+"img/multi_value_distribution.png";
 //            System.out.println(srcFile);
             BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(new File(srcFile)));
@@ -127,8 +140,12 @@ public class FileServiceImpl implements FileService {
             tempFileBufferedOutputStream.close();
             bufferedInputStream.close();
 
-            srcFile = "/Users/johnwang/Desktop/DSC180A/data/outputs/single_value_distribution.png";
-            destFile = "/Users/johnwang/Desktop/python/src/main/webapp/img/single_value_distribution.png";
+//            srcFile = "/Users/johnwang/Desktop/DSC180A/data/outputs/single_value_distribution.png";
+//            destFile = "/Users/johnwang/Desktop/python/src/main/webapp/img/single_value_distribution.png";
+
+            srcFile = "../../DSC180-Capstone-Project/data/outputs/single_value_distribution.png";
+            destFile = "../../DSC180-Capstone-Web/src/main/webapp/img/single_value_distribution.png";
+
             tempFile =path+"img/single_value_distribution.png";
             System.out.println(tempFile);
             bufferedInputStream = new BufferedInputStream(new FileInputStream(new File(srcFile)));
