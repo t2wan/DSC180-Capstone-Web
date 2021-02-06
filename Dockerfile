@@ -1,4 +1,4 @@
-ARG BASE_CONTAINER=ucsdets/datasciencenotebook:2020.2-stable
+ARG BASE_CONTAINER=maritama/DSC180-Capstone-Web
 
 FROM $BASE_CONTAINER
 
