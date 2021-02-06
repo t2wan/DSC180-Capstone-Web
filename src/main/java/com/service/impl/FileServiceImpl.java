@@ -23,7 +23,7 @@ public class FileServiceImpl implements FileService {
             //存放路径
 //            file.transferTo(new File("/Users/johnwang/Desktop/DSC180A/data/raw/input.txt"));
 //            file.transferTo(new File("/Users/gandh/DSC180-Capstone-Project/data/raw/input.txt"));
-            file.transferTo(new File("../DSC180-Capstone-Project/data/raw/input.txt"));
+            file.transferTo(new File("../../DSC180-Capstone-Project/data/raw/input.txt"));
 
             InputStreamReader read = new InputStreamReader(
                     file.getInputStream(),"utf-8");
